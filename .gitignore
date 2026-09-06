@@ -1,0 +1,21 @@
+node_modules/
+.output/
+.wrangler/
+.vercel/
+.tanstack/
+.grok/
+.node_modules.lock
+screenshots/
+artifacts/
+attachments/
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Logs and local OS files
+*.log
+npm-debug.log*
+Thumbs.db
+.DS_Store
