@@ -86,7 +86,7 @@ export function Hero() {
             )}
             style={delay(80)}
           >
-            Personal brand
+            DIGITAL BRAND
           </p>
           <h1 className="text-hero relative z-[1] mt-4 font-semibold tracking-[-0.055em] text-fg md:mt-3 md:max-w-[110%]">
             <SplitBrand
