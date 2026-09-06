@@ -199,6 +199,127 @@
 .planner-panel .cta {
   gap: 0.55rem;
 }
+.terminal-nav-link {
+  min-height: 2.25rem;
+  border-radius: 999px;
+  padding: 0.45rem 0.75rem;
+  color: var(--fg-muted);
+  font-size: 0.72rem;
+  font-weight: 500;
+  transition: color 180ms var(--ease-out), background-color 180ms var(--ease-out);
+}
+.terminal-nav-link:hover {
+  background: var(--bg-muted);
+  color: var(--fg);
+}
+.terminal-nav-prompt {
+  color: #4fcf86;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-weight: 700;
+}
+.ios-terminal {
+  border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: 18px;
+  background: #0d0d0f;
+  box-shadow: 0 30px 80px rgb(0 0 0 / 0.38), inset 0 1px rgb(255 255 255 / 0.05);
+}
+.ios-terminal-minimized {
+  min-height: 0;
+}
+.ios-terminal-bar {
+  min-height: 52px;
+  border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  background: linear-gradient(180deg, #242426, #1b1b1d);
+}
+.ios-dot {
+  position: relative;
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.16);
+}
+.ios-dot::after {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: rgb(0 0 0 / 0.62);
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+.ios-dot:hover::after,
+.ios-dot:focus-visible::after {
+  opacity: 1;
+}
+.ios-dot-exit::after {
+  content: "×";
+  font-size: 12px;
+}
+.ios-dot-minimize::after {
+  content: "−";
+  font-size: 11px;
+}
+.ios-dot-hide::after {
+  content: "‹›";
+  font-size: 8px;
+  transform: rotate(-45deg);
+}
+.terminal-output {
+  background:
+    radial-gradient(circle at 85% 10%, rgb(116 212 154 / 0.06), transparent 28%),
+    #0d0d0f;
+  white-space: normal;
+}
+.terminal-output p {
+  white-space: pre-wrap;
+}
+.terminal-command {
+  min-height: 2.1rem;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  color: rgb(255 255 255 / 0.62);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  transition: color 180ms var(--ease-out), border-color 180ms var(--ease-out), background-color 180ms var(--ease-out);
+}
+.terminal-command:hover,
+.terminal-command:focus-visible {
+  border-color: rgb(116 212 154 / 0.55);
+  background: rgb(116 212 154 / 0.1);
+  color: #9ce8b9;
+}
+.terminal-show-button {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  gap: 0.6rem;
+  min-height: 3rem;
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  color: rgb(255 255 255 / 0.72);
+  font-size: 0.8rem;
+  transition: background-color 180ms var(--ease-out), color 180ms var(--ease-out);
+}
+.terminal-show-button:hover {
+  background: rgb(255 255 255 / 0.08);
+  color: white;
+}
+.terminal-caret {
+  width: 0.5rem;
+  height: 1.15rem;
+  background: #74d49a;
+  animation: terminal-blink 1.1s steps(2, jump-none) infinite;
+}
+@keyframes terminal-blink {
+  50% { opacity: 0; }
+}
 
 @media print {
   @page {

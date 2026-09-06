@@ -79,6 +79,10 @@ export function Navbar() {
             <div className="hidden md:block">
               <CVButton variant="text" className="px-3" />
             </div>
+            <a href="/terminal" className="terminal-nav-link hidden items-center gap-2 sm:inline-flex">
+              <span className="terminal-nav-prompt">$</span>
+              Open Terminal
+            </a>
             <ThemeToggle />
             <button
               type="button"
@@ -127,6 +131,9 @@ export function Navbar() {
           ))}
         </nav>
         <div className="mt-8 flex flex-col gap-3">
+          <a href="/terminal" className="cta cta-solid justify-center" onClick={() => setOpen(false)}>
+            Open Terminal
+          </a>
           <CVButton variant="ghost" />
         </div>
       </div>
