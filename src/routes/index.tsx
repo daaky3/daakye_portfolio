@@ -11,6 +11,7 @@ import { Skills } from "@/components/skills";
 import { Process } from "@/components/process";
 import { Statement } from "@/components/statement";
 import { SocialSection, Contact } from "@/components/contact";
+import { ProjectPlanner } from "@/components/project-planner";
 import { Footer } from "@/components/footer";
 import { BackToTop } from "@/components/back-to-top";
 
@@ -31,6 +32,7 @@ function Home() {
         <Process />
         <Statement />
         <SocialSection />
+        <ProjectPlanner />
         <Contact />
       </main>
       <Footer />

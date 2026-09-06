@@ -85,7 +85,7 @@ export function Contact() {
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-8">
         <Reveal>
           <p className="text-micro font-medium uppercase tracking-[0.28em] text-fg-subtle">
-            06 — Contact
+            07 — Contact
           </p>
         </Reveal>
         <Reveal delay={80}>

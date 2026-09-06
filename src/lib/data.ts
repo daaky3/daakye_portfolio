@@ -6,6 +6,7 @@ export const NAV_LINKS = [
   { id: "work", label: "Work" },
   { id: "skills", label: "Skills" },
   { id: "process", label: "Process" },
+  { id: "planner", label: "Plan" },
   { id: "contact", label: "Contact" },
 ] as const;
 
