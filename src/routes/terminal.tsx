@@ -12,6 +12,7 @@ export const Route = createFileRoute("/terminal")({
 });
 
 type OutputLine = {
+  id: number;
   command?: string;
   content: string;
   tone?: "muted" | "accent" | "error";
@@ -19,20 +20,27 @@ type OutputLine = {
 
 const COMMANDS = ["help", "about", "projects", "skills", "github", "contact", "social", "clear", "plan project"];
 const INITIAL_OUTPUT: OutputLine[] = [
-  { content: "Loading...", tone: "muted" },
-  { content: "DΛΛKYΣ Terminal", tone: "accent" },
-  { content: "────────────────────", tone: "muted" },
-  { content: "Type help to explore the available commands.", tone: "muted" },
+  { id: 1, content: "Loading...", tone: "muted" },
+  { id: 2, content: "DΛΛKYΣ Terminal", tone: "accent" },
+  { id: 3, content: "────────────────────", tone: "muted" },
+  { id: 4, content: "Type help to explore the available commands.", tone: "muted" },
 ];
 
 function TerminalPage() {
   const navigate = useNavigate();
   const [input, setInput] = useState("");
   const [output, setOutput] = useState<OutputLine[]>(INITIAL_OUTPUT);
+  const [isTyping, setIsTyping] = useState(false);
   const [minimized, setMinimized] = useState(false);
   const [hidden, setHidden] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLDivElement>(null);
+  const nextLineId = useRef(5);
+  const typingTimer = useRef<number | null>(null);
+
+  useEffect(() => () => {
+    if (typingTimer.current !== null) window.clearInterval(typingTimer.current);
+  }, []);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -44,7 +52,7 @@ function TerminalPage() {
 
   const runCommand = (rawCommand: string) => {
     const command = rawCommand.trim().toLowerCase().replace(/\s+/g, " ");
-    if (!command) return;
+    if (!command || isTyping) return;
     if (command === "clear") {
       setOutput([]);
       setInput("");
@@ -52,12 +60,23 @@ function TerminalPage() {
     }
 
     const next = resolveCommand(command);
-    setOutput((current) => [...current, { command: rawCommand.trim(), content: next.content, tone: next.tone }]);
+    const lineId = nextLineId.current++;
+    setOutput((current) => [...current, { id: lineId, command: rawCommand.trim(), content: "", tone: next.tone }]);
     setInput("");
+    setIsTyping(true);
 
-    if (command === "plan project") {
-      window.setTimeout(() => navigate({ to: "/", hash: "planner" }), 250);
-    }
+    let position = 0;
+    typingTimer.current = window.setInterval(() => {
+      position = Math.min(position + 2, next.content.length);
+      setOutput((current) => current.map((line) => line.id === lineId ? { ...line, content: next.content.slice(0, position) } : line));
+      if (position >= next.content.length) {
+        if (typingTimer.current !== null) window.clearInterval(typingTimer.current);
+        typingTimer.current = null;
+        setIsTyping(false);
+        if (command === "github") window.open("https://github.com/daaky3", "_blank", "noopener,noreferrer");
+        if (command === "plan project") window.setTimeout(() => navigate({ to: "/", hash: "planner" }), 250);
+      }
+    }, 24);
   };
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
@@ -108,10 +127,11 @@ function TerminalPage() {
             ))}
             <form onSubmit={submit} className="flex items-center gap-2">
               <span className="text-[#74d49a]">$</span>
-              <input
+                <input
                 ref={inputRef}
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
+                  disabled={isTyping}
                 className="min-w-0 flex-1 bg-transparent text-white outline-none placeholder:text-white/30"
                 aria-label="Terminal command"
                 autoComplete="off"
@@ -126,7 +146,7 @@ function TerminalPage() {
             <p className="mb-3 text-[0.65rem] uppercase tracking-[0.2em] text-white/35">Quick commands</p>
             <div className="flex flex-wrap gap-2">
               {COMMANDS.map((command) => (
-                <button key={command} type="button" className="terminal-command" onClick={() => runCommand(command)}>
+                <button key={command} type="button" className="terminal-command" disabled={isTyping} onClick={() => runCommand(command)}>
                   {command}
                 </button>
               ))}
@@ -151,7 +171,6 @@ function resolveCommand(command: string): Pick<OutputLine, "content" | "tone"> {
     case "skills":
       return { content: SKILLS.slice(0, 12).join("\n") };
     case "github":
-      window.open("https://github.com/daaky3", "_blank", "noopener,noreferrer");
       return { content: "Opening github.com/daaky3...", tone: "accent" };
     case "contact":
       return { content: `${EMAIL}\nWhatsApp: ${WHATSAPP[0].label}\nWhatsApp: ${WHATSAPP[1].label}`, tone: "accent" };

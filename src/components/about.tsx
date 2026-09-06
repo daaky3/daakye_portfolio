@@ -1,11 +1,53 @@
+import { useEffect, useRef, useState } from "react";
 import { ABOUT } from "@/lib/data";
 import { BRAND, cn } from "@/lib/utils";
 import { Reveal } from "@/components/reveal";
 import { CVButton } from "@/components/cv-button";
 import { useInView } from "@/hooks/use-in-view";
+import { useIsFinePointer, usePrefersReducedMotion } from "@/hooks/use-media";
 
 export function About() {
   const { ref, inView } = useInView({ threshold: 0.25 });
+  const portraitRef = useRef<HTMLDivElement>(null);
+  const [portraitReady, setPortraitReady] = useState(false);
+  const fine = useIsFinePointer();
+  const reduced = usePrefersReducedMotion();
+
+  useEffect(() => {
+    setPortraitReady(true);
+  }, []);
+
+  useEffect(() => {
+    const stage = portraitRef.current;
+    if (!stage || !fine || reduced) return;
+
+    const onMove = (event: PointerEvent) => {
+      const bounds = stage.getBoundingClientRect();
+      const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 2;
+      const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 2;
+      stage.style.setProperty("--portrait-x", x.toFixed(3));
+      stage.style.setProperty("--portrait-y", y.toFixed(3));
+      stage.style.setProperty("--portrait-tilt-x", `${(y * -4).toFixed(2)}deg`);
+      stage.style.setProperty("--portrait-tilt-y", `${(x * 6).toFixed(2)}deg`);
+      stage.style.setProperty("--portrait-shift-x", `${(x * 8).toFixed(2)}px`);
+      stage.style.setProperty("--portrait-shift-y", `${(y * 6).toFixed(2)}px`);
+    };
+    const reset = () => {
+      stage.style.setProperty("--portrait-x", "0");
+      stage.style.setProperty("--portrait-y", "0");
+      stage.style.setProperty("--portrait-tilt-x", "0deg");
+      stage.style.setProperty("--portrait-tilt-y", "0deg");
+      stage.style.setProperty("--portrait-shift-x", "0px");
+      stage.style.setProperty("--portrait-shift-y", "0px");
+    };
+
+    stage.addEventListener("pointermove", onMove);
+    stage.addEventListener("pointerleave", reset);
+    return () => {
+      stage.removeEventListener("pointermove", onMove);
+      stage.removeEventListener("pointerleave", reset);
+    };
+  }, [fine, reduced]);
 
   return (
     <section id="about" className="relative py-28 md:py-36">
@@ -52,20 +94,29 @@ export function About() {
 
         <Reveal delay={120} className="mx-auto w-full max-w-[380px] md:max-w-none">
           <div
-            className="group relative overflow-hidden rounded-xl shadow-[var(--shadow-image)]"
+            ref={portraitRef}
+            className={cn(
+              "about-portrait-stage group relative",
+              portraitReady && "is-ready",
+              reduced && "is-reduced",
+            )}
             data-cursor="media"
           >
-            <picture>
-              <source srcSet="/images/portrait-about.webp" type="image/webp" />
-              <img
-                src="/images/portrait-about.jpg"
-                alt={`${BRAND} portrait`}
-                width={858}
-                height={1100}
-                loading="lazy"
-                className="aspect-[4/5] w-full object-cover object-[50%_18%] transition-[transform,filter] duration-700 ease-[var(--ease-out)] group-hover:scale-[1.04] group-hover:brightness-[1.04] outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10"
-              />
-            </picture>
+            <div className="about-portrait-shadow" aria-hidden="true" />
+            <div className="about-portrait-card">
+              <picture>
+                <source srcSet="/images/portrait-about.webp" type="image/webp" />
+                <img
+                  src="/images/portrait-about.jpg"
+                  alt={`${BRAND} portrait`}
+                  width={858}
+                  height={1100}
+                  loading="lazy"
+                />
+              </picture>
+              <div className="about-portrait-sheen" aria-hidden="true" />
+            </div>
+            <div className="about-portrait-ring" aria-hidden="true" />
           </div>
         </Reveal>
       </div>

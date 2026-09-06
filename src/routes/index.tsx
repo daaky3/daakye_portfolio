@@ -12,6 +12,7 @@ import { Process } from "@/components/process";
 import { Statement } from "@/components/statement";
 import { SocialSection, Contact } from "@/components/contact";
 import { ProjectPlanner } from "@/components/project-planner";
+import { CodeShowcase } from "@/components/code-showcase";
 import { Footer } from "@/components/footer";
 import { BackToTop } from "@/components/back-to-top";
 
@@ -34,6 +35,7 @@ function Home() {
         <SocialSection />
         <ProjectPlanner />
         <Contact />
+        <CodeShowcase />
       </main>
       <Footer />
       <BackToTop />
