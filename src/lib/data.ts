@@ -170,6 +170,7 @@ export const ABOUT = {
 
 export const SITE = {
   brand: BRAND,
+  url: "https://daakye.online",
   title: BRAND,
   description: `${BRAND} — Developer and digital creator building modern websites, applications and digital experiences.`,
   footerLine: "Building digital experiences with purpose.",

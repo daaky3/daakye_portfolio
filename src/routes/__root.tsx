@@ -22,10 +22,15 @@ export const Route = createRootRoute({
       { name: "theme-color", content: "#050505" },
       { name: "author", content: SITE.brand },
       { name: "application-name", content: SITE.brand },
+      {
+        name: "google-site-verification",
+        content: "85vxuWIKOHYc-nagngHC3uPnUX3sPIPPLJCF5QEAcSg",
+      },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       { rel: "stylesheet", href: appCss },
+      { rel: "canonical", href: SITE.url },
       { rel: "manifest", href: "/__grok/manifest.webmanifest" },
       { rel: "apple-touch-icon", href: "/__grok/icon-180.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
