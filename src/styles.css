@@ -678,6 +678,51 @@ html.has-cursor * {
   color: #2d8cff;
   fill: rgb(45 140 255 / 0.14);
 }
+.about-section {
+  isolation: isolate;
+}
+.about-video-backdrop,
+.about-video-backdrop video,
+.about-video-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.about-video-backdrop {
+  z-index: -2;
+  overflow: hidden;
+  background: #090a0c url("/images/rotation.jpg") center / cover no-repeat;
+  pointer-events: none;
+}
+.about-video-backdrop video {
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.62;
+  filter: saturate(0.82) contrast(1.08) brightness(0.64);
+}
+.about-video-overlay {
+  z-index: 1;
+  background: linear-gradient(90deg, rgb(5 5 5 / 0.92), rgb(5 5 5 / 0.62) 52%, rgb(5 5 5 / 0.42));
+}
+.about-section > .mx-auto {
+  position: relative;
+  z-index: 2;
+}
+.about-section > .mx-auto > div:first-child {
+  color: #f5f5f7;
+}
+.about-section > .mx-auto > div:first-child .text-fg-muted,
+.about-section > .mx-auto > div:first-child .text-fg-subtle {
+  color: rgb(245 245 247 / 0.7);
+}
+.about-section .cta-ghost {
+  color: #f5f5f7;
+  box-shadow: inset 0 0 0 1px rgb(245 245 247 / 0.34);
+}
+.about-section .cta-ghost:hover {
+  background: rgb(245 245 247 / 0.1);
+}
 
 .about-portrait-stage {
   --portrait-x: 0;
@@ -686,7 +731,13 @@ html.has-cursor * {
   --portrait-tilt-y: 0deg;
   --portrait-shift-x: 0px;
   --portrait-shift-y: 0px;
+  --orbit-back-x: 0px;
+  --orbit-back-y: 0px;
+  --orbit-mid-x: 0px;
+  --orbit-mid-y: 0px;
   isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
   min-height: 31rem;
   perspective: 1100px;
   transform-style: preserve-3d;
@@ -713,10 +764,51 @@ html.has-cursor * {
 }
 .about-portrait-card img {
   object-fit: cover;
-  object-position: 49% 29%;
-  filter: saturate(0.86) contrast(1.04);
+  object-position: center;
+  filter: saturate(0.92) contrast(1.06) brightness(0.92);
   transform: scale(1.08) translate3d(calc(var(--portrait-x) * -5px), calc(var(--portrait-y) * -4px), 0);
   transition: transform 700ms var(--ease-out), filter 700ms var(--ease-out);
+}
+.about-rotation-orbit {
+  position: absolute;
+  z-index: 1;
+  overflow: hidden;
+  border: 1px solid rgb(156 213 255 / 0.28);
+  border-radius: var(--radius-xl);
+  background: #101a2b;
+  box-shadow: 0 22px 48px -28px rgb(0 0 0 / 0.8);
+  opacity: 0.52;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  transition: transform 700ms var(--ease-out), opacity 700ms var(--ease-out);
+}
+.about-rotation-orbit img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(0.5px) saturate(0.72) brightness(0.72);
+}
+.about-rotation-orbit-back {
+  inset: 8% 10% 12% -4%;
+  transform: rotate(-10deg) translate3d(var(--orbit-back-x), var(--orbit-back-y), -22px) scale(0.86);
+  animation: about-rotation-back 9s ease-in-out infinite;
+}
+.about-rotation-orbit-mid {
+  inset: 2% -3% 18% 12%;
+  transform: rotate(8deg) translate3d(var(--orbit-mid-x), var(--orbit-mid-y), -10px) scale(0.92);
+  animation: about-rotation-mid 7s ease-in-out infinite reverse;
+}
+.about-portrait-stage:hover .about-rotation-orbit {
+  opacity: 0.7;
+}
+@keyframes about-rotation-back {
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: 10px; }
+}
+@keyframes about-rotation-mid {
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: -8px; }
 }
 .about-portrait-sheen {
   z-index: 1;
@@ -756,9 +848,11 @@ html.has-cursor * {
 .about-portrait-stage.is-reduced .about-portrait-card img,
 .about-portrait-stage.is-reduced .about-portrait-sheen,
 .about-portrait-stage.is-reduced .about-portrait-shadow,
-.about-portrait-stage.is-reduced .about-portrait-ring {
+.about-portrait-stage.is-reduced .about-portrait-ring,
+.about-portrait-stage.is-reduced .about-rotation-orbit {
   transform: none;
   transition: none;
+  animation: none;
 }
 
 /* Hero */

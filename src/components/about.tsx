@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ABOUT } from "@/lib/data";
-import { BRAND, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/reveal";
 import { CVButton } from "@/components/cv-button";
 import { useInView } from "@/hooks/use-in-view";
@@ -31,6 +31,10 @@ export function About() {
       stage.style.setProperty("--portrait-tilt-y", `${(x * 6).toFixed(2)}deg`);
       stage.style.setProperty("--portrait-shift-x", `${(x * 8).toFixed(2)}px`);
       stage.style.setProperty("--portrait-shift-y", `${(y * 6).toFixed(2)}px`);
+      stage.style.setProperty("--orbit-back-x", `${(x * -12).toFixed(2)}px`);
+      stage.style.setProperty("--orbit-back-y", `${(y * -8).toFixed(2)}px`);
+      stage.style.setProperty("--orbit-mid-x", `${(x * 12).toFixed(2)}px`);
+      stage.style.setProperty("--orbit-mid-y", `${(y * 8).toFixed(2)}px`);
     };
     const reset = () => {
       stage.style.setProperty("--portrait-x", "0");
@@ -39,6 +43,10 @@ export function About() {
       stage.style.setProperty("--portrait-tilt-y", "0deg");
       stage.style.setProperty("--portrait-shift-x", "0px");
       stage.style.setProperty("--portrait-shift-y", "0px");
+      stage.style.setProperty("--orbit-back-x", "0px");
+      stage.style.setProperty("--orbit-back-y", "0px");
+      stage.style.setProperty("--orbit-mid-x", "0px");
+      stage.style.setProperty("--orbit-mid-y", "0px");
     };
 
     stage.addEventListener("pointermove", onMove);
@@ -50,7 +58,20 @@ export function About() {
   }, [fine, reduced]);
 
   return (
-    <section id="about" className="relative py-28 md:py-36">
+    <section id="about" className="about-section relative overflow-hidden py-28 md:py-36">
+      <div className="about-video-backdrop" aria-hidden="true">
+        <video
+          autoPlay={!reduced}
+          loop
+          muted
+          playsInline
+          poster="/images/rotation.jpg"
+          preload="metadata"
+        >
+          <source src="/videos/animated_keyboard.mp4" type="video/mp4" />
+        </video>
+        <div className="about-video-overlay" />
+      </div>
       <div className="mx-auto grid w-full max-w-[1280px] gap-16 px-5 md:grid-cols-[1.15fr_0.85fr] md:items-center md:gap-20 md:px-8">
         <div>
           <Reveal>
@@ -103,17 +124,20 @@ export function About() {
             data-cursor="media"
           >
             <div className="about-portrait-shadow" aria-hidden="true" />
+            <div className="about-rotation-orbit about-rotation-orbit-back" aria-hidden="true">
+              <img src="/images/rotation.jpg" alt="" />
+            </div>
+            <div className="about-rotation-orbit about-rotation-orbit-mid" aria-hidden="true">
+              <img src="/images/rotation.jpg" alt="" />
+            </div>
             <div className="about-portrait-card">
-              <picture>
-                <source srcSet="/images/portrait-about.webp" type="image/webp" />
-                <img
-                  src="/images/portrait-about.jpg"
-                  alt={`${BRAND} portrait`}
-                  width={858}
-                  height={1100}
-                  loading="lazy"
-                />
-              </picture>
+              <img
+                src="/images/rotation.jpg"
+                alt="Layered digital experiences displayed in 3D"
+                width={1024}
+                height={1024}
+                loading="lazy"
+              />
               <div className="about-portrait-sheen" aria-hidden="true" />
             </div>
             <div className="about-portrait-ring" aria-hidden="true" />
