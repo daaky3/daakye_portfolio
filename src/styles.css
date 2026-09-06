@@ -578,6 +578,22 @@ html.has-cursor * {
 .nav-link.is-active::after {
   transform: scaleX(1);
 }
+.nav-avatar {
+  width: 1.9rem;
+  height: 1.9rem;
+  flex: 0 0 auto;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
+.nav-verified {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  color: #2d8cff;
+  fill: rgb(45 140 255 / 0.14);
+}
 
 /* Hero */
 .hero-stage {

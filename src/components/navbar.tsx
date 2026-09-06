@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { BadgeCheck, Menu, X } from "lucide-react";
 import { BrandMark } from "@/components/brand";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { CVButton } from "@/components/cv-button";
@@ -53,10 +53,24 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => go("home")}
-            className="nav-brand shrink-0 text-fg"
+            className="nav-brand flex shrink-0 items-center gap-2 text-fg"
             aria-label="DΛΛKYΣ home"
           >
+            <img
+              src="/images/avi.jpg"
+              alt=""
+              className="nav-avatar"
+              onError={(event) => {
+                event.currentTarget.src = "/images/profile-full.jpg";
+              }}
+            />
             <BrandMark />
+            <BadgeCheck
+              className="nav-verified"
+              aria-label="Verified brand"
+              role="img"
+              strokeWidth={2.2}
+            />
           </button>
 
           <nav
