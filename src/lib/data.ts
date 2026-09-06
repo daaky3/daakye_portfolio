@@ -172,6 +172,7 @@ export const SITE = {
   brand: BRAND,
   url: "https://daakye.online",
   title: BRAND,
-  description: `${BRAND} — Developer and digital creator building modern websites, applications and digital experiences.`,
+  description: `${BRAND} is a Ghanaian software developer and ICT professional building business websites, web applications, data solutions, and digital systems with React, JavaScript, HTML, CSS, Supabase, Node.js, C#, C++, and Vite. Explore projects for AJI Group Ghana Ltd, SENGSHSTP, Manzoley, and Serwaa Nyarko Girls' Senior High School.`,
+  keywords: "Daakye, app developer, website developer, software development, business websites, web applications, data analysis, developer terminal, code, JavaScript, JS, HTML, CSS, React, Vite, Supabase, Node.js, C, C++, C#, Java, AJI Group Ghana Ltd, SENGSHSTP, Manzoley, admission portal, Serwaa Nyarko Girls",
   footerLine: "Building digital experiences with purpose.",
 };
