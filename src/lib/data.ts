@@ -131,7 +131,7 @@ export const PROCESS = [
   },
 ] as const;
 
-export const EMAIL = "albertquainoo045@gmail.com";
+export const EMAIL = "info@daakye.online";
 
 export const WHATSAPP = [
   { label: "0209555624", href: "https://wa.me/233209555624" },
