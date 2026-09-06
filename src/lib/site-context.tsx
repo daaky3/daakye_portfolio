@@ -34,13 +34,7 @@ function readTheme(): Theme {
   } catch {
     /* ignore */
   }
-  if (
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
-    return "dark";
-  }
-  return "light";
+  return "dark";
 }
 
 function applyTheme(theme: Theme) {
@@ -57,7 +51,7 @@ function shouldSkipIntro() {
 }
 
 export function SiteProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("light");
+  const [theme, setThemeState] = useState<Theme>("dark");
   const [introDone, setIntroDone] = useState(true);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
 

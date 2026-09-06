@@ -10,7 +10,7 @@ import { SiteProvider } from "@/lib/site-context";
 import { SITE } from "@/lib/data";
 import appCss from "../styles.css?url";
 
-const BOOT_SCRIPT = `(function(){try{var t=localStorage.getItem("daakye-theme");var dark=t==="dark"||(t!=="light"&&window.matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.classList.toggle("dark",dark);var skip=false;try{skip=sessionStorage.getItem("daakye-intro")==="1"}catch(e){skip=true}if(skip||window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("intro-done")}else{document.documentElement.classList.add("intro-pending")}}catch(e){document.documentElement.classList.add("intro-done")}})();`;
+const BOOT_SCRIPT = `(function(){try{var t=localStorage.getItem("daakye-theme");var dark=t!=="light";document.documentElement.classList.toggle("dark",dark);var skip=false;try{skip=sessionStorage.getItem("daakye-intro")==="1"}catch(e){skip=true}if(skip||window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("intro-done")}else{document.documentElement.classList.add("intro-pending")}}catch(e){document.documentElement.classList.add("dark");document.documentElement.classList.add("intro-done")}})();`;
 
 export const Route = createRootRoute({
   head: () => ({
